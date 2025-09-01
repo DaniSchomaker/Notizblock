@@ -1,7 +1,10 @@
 // Notizen anzeigen lassen
 
 // ich brauche Notizen
-let notes = ["banana", "rasen mähen"];
+let notesTitles = ['Ba','Aufgabe'];
+let notes = ['banana', 'rasen mähen'];
+
+let trashNotesTitles = [];
 let trashNotes = [];
 
 // ich muss definieren, wo/wann sie angezeigt werden
@@ -20,10 +23,35 @@ function renderNotes() {
 }
 
 //  // Das HTML wird aus der function renderNotes() ausgegliedert
-function getNoteTemplate(indexNote) {
-  // get = kriegen wir // Übergabeparameter (note)
-  return `<p>+ ${notes[indexNote]}<button onclick="deleteNote(${indexNote})">X</button></p>`;
+function getNoteTemplate(indexNote) {   // get = kriegen wir // Übergabeparameter (note)
+  return `<p>+ title: ${notesTitles[indexNote]} -> ${notes[indexNote]}<button onclick="noteToTrash(${indexNote})">X</button></p>`;
 }
+
+
+
+// Papierkorb anlegen
+function renderTrashNotes() {
+  let trashContentRef = document.getElementById("trash_content");
+  trashContentRef.innerHTML = "";
+
+  for (
+    let indexTrashNote = 0;
+    indexTrashNote < trashNotes.length; 
+    indexTrashNote++ ////
+  ) {
+    trashContentRef.innerHTML += getTrashNoteTemplate(indexTrashNote); ////
+  }
+}
+
+//  // Das HTML wird aus der function renderTrashNotes() ausgegliedert
+function getTrashNoteTemplate(indexTrashNote) {
+  return `<p>+ title: ${trashNotesTitles[indexTrashNote]} ---> ${trashNotes[indexTrashNote]}<button onclick="deleteNote(${indexTrashNote})">X</button></p>`;
+}
+
+
+
+
+
 
 // Notizen hinzufügen
 
@@ -40,37 +68,23 @@ function addNote() {
   noteInputRef.value = ""; //am Ende das Eingabefeld leeren
 }
 
-// Papierkorb anlegen
-function renderTrashNotes() {
-  let trashContentRef = document.getElementById("trash_content");
-  trashContentRef.innerHTML = "";
 
-  for (
-    let indexTrashNote = 0;
-    indexTrashNote < trashNotes.length; //// ??????TrashNotes.length?
-    index++
-  ) {
-    trashContentRef.innerHTML += getNoteTemplate(indexTrashNote);
-  }
-}
+// Notizen dem Papierkorb hinzufügen bzw. ganz löschen & Anzeige updaten
 
-//  // Das HTML wird aus der function renderTrashNotes() ausgegliedert
-function getTrashNoteTemplate(indexTrashNote) {
-  return `<p>+ ${notes[indexTrashNote]}<button onclick="deleteNote(${indexTrashNote})">X</button></p>`;
+function noteToTrash(indexNote) {
+    let trashNote = notes.splice(indexNote, 1); // EINZELNE (!) trashNote ungleich trashNotes!
+    trashNotes.push(trashNote[0]);
+    let trashNoteTitle = notesTitles.splice(indexNote, 1);
+    trashNotesTitles.push(trashNoteTitle[0]);
+    renderNotes();
+    renderTrashNotes();
 }
 
 
-// Notizen löschen & Anzeige updaten
-
-function deleteNote(indexNote) {
-  // console.log(notes.splice(indexNote,1));
-
-  //   notes.splice(indexNote, 1); // array.splice(indexNummer_Pflicht, NumberOfItemsToBeRemoved_Optional, item1ToBeAdded, ..., intemNToBeAdded  ))
-
-  let trashNote = notes.splice(indexNote, 1); // EINZELNE (!) trashNote undlgiech trashNotes!
-  trashNotes.push(trashNote);
+function deleteNote(indexTrashNote) {
+  trashNotes.splice(indexTrashNote, 1);
   renderNotes();
-  renderTrashNotes(); // Rendern = anzeigen lassen
+  renderTrashNotes(); 
 }
 
 
