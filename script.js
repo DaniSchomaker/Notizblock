@@ -14,18 +14,22 @@ let trashNotes = [];
 //  // JS: Das "HTML" in eine extra function (Template) schreiben
 
 function renderNotes() {
-  let contentRef = document.getElementById("content"); // in contentRef wird das Ergebnis aus der function gespeichert?
+  let contentRef = document.getElementById('content'); 
   contentRef.innerHTML = ""; // zu Beginn leeren
+
+  // let titleRef = document.getElementById('title_input')
+  // titleRef.innerHTML = ""; 
 
   for (let indexNote = 0; indexNote < notes.length; indexNote++) {
     contentRef.innerHTML += getNoteTemplate(indexNote); // s.u.
+    // titleRef.innerHTML += getNoteTemplate(indexNote);
   }
 }
 
 //  // Das HTML wird aus der function renderNotes() ausgegliedert
 function getNoteTemplate(indexNote) {
   // get = kriegen wir // Übergabeparameter (note)
-  return `<p>+ title: ${notesTitles[indexNote]} -> ${notes[indexNote]}<button onclick="noteToTrash(${indexNote})">X</button></p>`;
+  return `<p>+ Titel: ${notesTitles[indexNote]} - Notiz: ${notes[indexNote]}<button onclick="noteToTrash(${indexNote})">X</button></p>`;
 }
 
 // Papierkorb anlegen
@@ -44,22 +48,28 @@ function renderTrashNotes() {
 
 //  // Das HTML wird aus der function renderTrashNotes() ausgegliedert
 function getTrashNoteTemplate(indexTrashNote) {
-  return `<p>+ title: ${trashNotesTitles[indexTrashNote]} ---> ${trashNotes[indexTrashNote]}<button onclick="deleteNote(${indexTrashNote})">X</button></p>`;
+  return `<p>+ Titel: ${trashNotesTitles[indexTrashNote]} - Notiz: ${trashNotes[indexTrashNote]}<button onclick="deleteNote(${indexTrashNote})">X</button></p>`;
 }
 
 // Notizen hinzufügen
 
 function addNote() {
-  let noteInputRef = document.getElementById("note_input"); // Eingabe auslesen
+  let noteInputRef = document.getElementById('note_input'); // Eingabe auslesen
   let noteInput = noteInputRef.value;
+
+  let titleInputRef = document.getElementById('title_input');
+  let titleInput = titleInputRef.value;
   // man kann das oben auch in einer Zeile machen, aber TIPP:
   // Referenzen zu den HTML-Elementen und dass, was ich damit mache trennen
 
   notes.push(noteInput); // Eingabe dem notes-Array hinzufügen
+  notesTitles.push(titleInput); // Eingabe aus dem Title-Array hinzufügen
+
 
   renderNotes(); // Eingabe anzeigen lassen
 
   noteInputRef.value = ""; //am Ende das Eingabefeld leeren
+  titleInputRef.value = "";
 
   saveToLocalStorage(); // Wenn eine Notiz hinzugefügt wurde, wird diese im LocalStorage gespeichert
 }
