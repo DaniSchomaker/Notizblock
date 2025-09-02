@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Notizblock</title>
 
-    <script src="./script.js"></script>
+    <script src="./scripts/templates.js"></script> <!-- Reihenfolge ist wichtig! Erst Templates laden, dann das Script! -->
+        <script src="./script.js"></script>
 
     <link rel="stylesheet" href="./styles/standard.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body onload="getFromLocalStorage(); renderNotes(); renderTrashNotes() ">
+  <body onload="getFromLocalStorage(); renderNotes(); renderArchiveNotes(); renderTrashNotes()">
     <h1>Notizblock</h1>
 
     <label for="title_input">Titel:</label>     <!-- das for? -->
