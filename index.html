@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./styles/standard.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body onload="renderNotes()">
+  <body onload="getFromLocalStorage(); renderNotes(); renderTrashNotes() ">
     <h1>Notizblock</h1>
 
     <label for="title_input">Titel:</label>     <!-- das for? -->
@@ -21,10 +21,13 @@
 
     <button onclick="addNote()">speichern</button>
 
-    <h2>notes</h2>
+    <h2>Notizen</h2>
     <div id="content"></div>
 
-    <h2>trash</h2>
+    <h2>Archiv</h2>
+    <div id="archive_content"></div>
+
+    <h2>Papierkorb</h2>
     <div id="trash_content"></div>
   </body>
 </html>
