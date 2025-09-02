@@ -10,6 +10,7 @@
     <script src="./script.js"></script>
 
     <link rel="stylesheet" href="./styles/standard.css" />
+    <link rel="stylesheet" href="./styles/assets.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body
@@ -17,25 +18,38 @@
   >
     <h1>Notizblock</h1>
 
-    <label for="title_input">Titel:</label>
-    <!-- das for? -->
-    <input id="title_input" type="text" />
+    <section class="input_area">
+      <div>
+        <label for="title_input">Titel:</label>
+        <input id="title_input" type="text" />
+      </div>
+      <div>
+        <label for="note_input">Notiz: </label>
+        <input id="note_input" type="text" />
+      </div>
+      <button class="btn" onclick="addNote()">speichern</button>
+    </section>
 
-    <label for="note_input">Notiz: </label>
-    <!-- das for? -->
-    <input id="note_input" type="text" />
+    <section class="output_area">
+      <div id="error"></div>
 
-    <button onclick="addNote()">speichern</button>
+      <div class="output_box">
+        <h2>Notizen</h2>
+        <div class="seperator"></div>
+        <div id="content"></div>
+      </div>
 
-    <div id="error"></div>
+      <div class="output_box">
+        <h2>Archiv</h2>
+        <div class="seperator"></div>
+        <div id="archive_content"></div>
+      </div>
 
-    <h2>Notizen</h2>
-    <div id="content"></div>
-
-    <h2>Archiv</h2>
-    <div id="archive_content"></div>
-
-    <h2>Papierkorb</h2>
-    <div id="trash_content"></div>
+      <div class="output_box">
+        <h2>Papierkorb</h2>
+        <div class="seperator"></div>
+        <div id="trash_content"></div>
+      </div>
+    </section>
   </body>
 </html>

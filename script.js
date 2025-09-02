@@ -7,7 +7,7 @@ let trashNotes = [];
 let archiveNotesTitles = [];
 let archiveNotes = [];
 
-// ich muss definieren, wo/wann sie angezeigt werden
+// ich muss definieren, wo/wann die Notizen angezeigt werden
 //  // HTML: <div> mit id erstellen
 //  // JS: "render"-function, die beschreibt, wie etwas auf dem Bildschirm dargestellt wird
 //  // HTML: function ausführen lassen <body onload="functionname()">
@@ -18,10 +18,10 @@ let archiveNotes = [];
 // Bereich: Notizen
 function renderNotes() {
   let contentRef = document.getElementById("content");
-  contentRef.innerHTML = ""; // zu Beginn leeren
+  contentRef.innerHTML = "";
 
   let titleRef = document.getElementById("title_input"); //???
-  titleRef.innerHTML = ""; //???
+  titleRef.innerHTML = "";
 
   for (let indexNote = 0; indexNote < notes.length; indexNote++) {
     contentRef.innerHTML += getNoteTemplate(indexNote); // Das HTML wird aus der function renderNotes() --> templates.js ausgegliedert
@@ -59,8 +59,7 @@ function renderTrashNotes() {
 
 /////////////////////////// Funktionalitäten: Input-Feld / Buttons ///////////////////////////
 
-// Hole Daten aus dem Input-Feld --> Notizen
-
+// Hole Daten aus dem Input-Feld --> Notizen (inkl. Fehlermeldung)
 function addNote() {
   let titleInputRef = document.getElementById("title_input");
   let titleInput = titleInputRef.value;
@@ -71,7 +70,8 @@ function addNote() {
 
   document.getElementById("error").innerHTML = ""; // Leere das DIV für die Fehlermeldungen
 
-  if (titleInput.length < 3 || noteInput.length < 3) { // Fehlermeldung
+  if (titleInput.length < 3 || noteInput.length < 3) {
+    // Fehlermeldung
     document.getElementById("error").innerHTML =
       "Bitte Titel und Notiz (jeweils mindestens 3 Buchstaben) eingeben.";
   } else {
@@ -89,26 +89,7 @@ function addNote() {
   saveToLocalStorage(); // Wenn eine Notiz hinzugefügt wurde, wird diese im LocalStorage gespeichert
 }
 
-// function sendMessage() {
-//   let input_name = document.getElementById("name").value;
-//   let input_comment = document.getElementById("comment").value;
-
-//   document.getElementById("error").innerHTML = ""; // statt display: none;
-
-//   if (input_name.length < 3 || input_comment.length < 5) {
-//     document.getElementById("error").innerHTML =
-//       "Bitte Name (min 3 Buchstaben) und Nachricht (min 5 Buchstaben) eingeben.";
-//   } else {
-//     document.getElementById(
-//       "output"
-//     ).innerHTML += `<br>${input_name}: ${input_comment} <br> `;
-//     document.getElementById("name").value = "";
-//     document.getElementById("comment").value = "";
-//   }
-// }
-
 // Verschiebe Notizen --> Archiv
-
 function noteToArchive(indexNote) {
   let archiveNote = notes.splice(indexNote, 1);
   archiveNotes.push(archiveNote[0]);
@@ -124,7 +105,6 @@ function noteToArchive(indexNote) {
 }
 
 // Verschiebe Notizen --> Papierkorb
-
 function noteToTrash(indexNote) {
   let trashNote = notes.splice(indexNote, 1); // EINZELNE (!) trashNote ungleich trashNotes!
   trashNotes.push(trashNote[0]);
@@ -138,7 +118,6 @@ function noteToTrash(indexNote) {
 }
 
 // Verschiebe Notiz aus Archiv --> Notizen ("wiederherstellen")
-
 function archiveToNotes(indexArchiveNote) {
   let movedNote = archiveNotes.splice(indexArchiveNote, 1)[0];
   let movedNoteTitle = archiveNotesTitles.splice(indexArchiveNote, 1)[0];
@@ -153,7 +132,6 @@ function archiveToNotes(indexArchiveNote) {
 }
 
 // Verschiebe Notiz aus Archiv --> Papierkorb
-
 function archiveToTrash(indexArchiveNote) {
   let movedNote = archiveNotes.splice(indexArchiveNote, 1)[0];
   let movedNoteTitle = archiveNotesTitles.splice(indexArchiveNote, 1)[0];
@@ -168,7 +146,6 @@ function archiveToTrash(indexArchiveNote) {
 }
 
 // Verschiebe Notiz aus Papierkorb --> Notizen ("wiederherstellen")
-
 function trashToNotes(indexTrashNote) {
   let restoredNote = trashNotes.splice(indexTrashNote, 1)[0];
   let restoredTitle = trashNotesTitles.splice(indexTrashNote, 1)[0];
@@ -184,7 +161,6 @@ function trashToNotes(indexTrashNote) {
 }
 
 // Verschiebe Notiz aus Papierkorb --> Archiv
-
 function trashToArchive(indexTrashNote) {
   let movedNote = trashNotes.splice(indexTrashNote, 1);
   archiveNotes.push(movedNote[0]);
@@ -199,7 +175,6 @@ function trashToArchive(indexTrashNote) {
 }
 
 // Papierkorb --> endgültig löschen
-
 function deleteNote(indexTrashNote) {
   trashNotes.splice(indexTrashNote, 1);
   trashNotesTitles.splice(indexTrashNote, 1); // hinzugefügt, damit auch der Titel gelöscht wird

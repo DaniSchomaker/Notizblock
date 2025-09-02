@@ -1,0 +1,29 @@
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 24px;
+}
+
+.input_area {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.output_area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+}
+
+#error {
+  color: rgb(183, 3, 3);
+  margin-top: 16px;
+}
