@@ -62,15 +62,22 @@ function renderTrashNotes() {
 // Hole Daten aus dem Input-Feld --> Notizen
 
 function addNote() {
-  let noteInputRef = document.getElementById("note_input"); // Eingabe auslesen
-  let noteInput = noteInputRef.value;
-
   let titleInputRef = document.getElementById("title_input");
   let titleInput = titleInputRef.value;
+
+  let noteInputRef = document.getElementById("note_input"); // Eingabe auslesen
+  let noteInput = noteInputRef.value;
   // man kann das oben auch in einer Zeile machen, aber TIPP: Referenzen zu den HTML-Elementen und dass, was ich damit mache trennen
 
-  notes.push(noteInput); // Eingabe dem notes-Array hinzufügen
-  notesTitles.push(titleInput); // Eingabe aus dem Title-Array hinzufügen
+  document.getElementById("error").innerHTML = ""; // Leere das DIV für die Fehlermeldungen
+
+  if (titleInput.length < 3 || noteInput.length < 3) { // Fehlermeldung
+    document.getElementById("error").innerHTML =
+      "Bitte Titel und Notiz (jeweils mindestens 3 Buchstaben) eingeben.";
+  } else {
+    notes.push(noteInput); // Eingabe dem notes-Array hinzufügen
+    notesTitles.push(titleInput); // Eingabe aus dem Title-Array hinzufügen
+  }
 
   renderNotes(); // Eingabe anzeigen lassen
   renderArchiveNotes();
@@ -81,6 +88,24 @@ function addNote() {
 
   saveToLocalStorage(); // Wenn eine Notiz hinzugefügt wurde, wird diese im LocalStorage gespeichert
 }
+
+// function sendMessage() {
+//   let input_name = document.getElementById("name").value;
+//   let input_comment = document.getElementById("comment").value;
+
+//   document.getElementById("error").innerHTML = ""; // statt display: none;
+
+//   if (input_name.length < 3 || input_comment.length < 5) {
+//     document.getElementById("error").innerHTML =
+//       "Bitte Name (min 3 Buchstaben) und Nachricht (min 5 Buchstaben) eingeben.";
+//   } else {
+//     document.getElementById(
+//       "output"
+//     ).innerHTML += `<br>${input_name}: ${input_comment} <br> `;
+//     document.getElementById("name").value = "";
+//     document.getElementById("comment").value = "";
+//   }
+// }
 
 // Verschiebe Notizen --> Archiv
 
@@ -208,7 +233,8 @@ function saveToLocalStorage() {
   );
 }
 
-function getFromLocalStorage() {   // Funktion holt gespeicherte Arrays aus dem LocalStorage
+function getFromLocalStorage() {
+  // Funktion holt gespeicherte Arrays aus dem LocalStorage
   if (JSON.parse(localStorage.getItem("notes")) != null) {
     notes = JSON.parse(localStorage.getItem("notes"));
     notesTitles = JSON.parse(localStorage.getItem("notesTitles"));

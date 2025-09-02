@@ -5,22 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Notizblock</title>
 
-    <script src="./scripts/templates.js"></script> <!-- Reihenfolge ist wichtig! Erst Templates laden, dann das Script! -->
-        <script src="./script.js"></script>
+    <script src="./scripts/templates.js"></script>
+    <!-- Reihenfolge ist wichtig! Erst Templates laden, dann das Script! -->
+    <script src="./script.js"></script>
 
     <link rel="stylesheet" href="./styles/standard.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body onload="getFromLocalStorage(); renderNotes(); renderArchiveNotes(); renderTrashNotes()">
+  <body
+    onload="getFromLocalStorage(); renderNotes(); renderArchiveNotes(); renderTrashNotes()"
+  >
     <h1>Notizblock</h1>
 
-    <label for="title_input">Titel:</label>     <!-- das for? -->
+    <label for="title_input">Titel:</label>
+    <!-- das for? -->
     <input id="title_input" type="text" />
 
-    <label for="note_input">Notiz: </label>     <!-- das for? -->
+    <label for="note_input">Notiz: </label>
+    <!-- das for? -->
     <input id="note_input" type="text" />
 
     <button onclick="addNote()">speichern</button>
+
+    <div id="error"></div>
 
     <h2>Notizen</h2>
     <div id="content"></div>
