@@ -15,6 +15,7 @@ let archiveNotes = [];
 
 /////////////////////////// Bereiche rendern ///////////////////////////
 
+// Bereich: Notizen
 function renderNotes() {
   let contentRef = document.getElementById("content");
   contentRef.innerHTML = ""; // zu Beginn leeren
@@ -23,19 +24,12 @@ function renderNotes() {
   titleRef.innerHTML = ""; //???
 
   for (let indexNote = 0; indexNote < notes.length; indexNote++) {
-    contentRef.innerHTML += getNoteTemplate(indexNote); // Das HTML wird aus der function renderNotes() ausgegliedert
+    contentRef.innerHTML += getNoteTemplate(indexNote); // Das HTML wird aus der function renderNotes() --> templates.js ausgegliedert
     titleRef.innerHTML += getNoteTemplate(indexNote);
   }
 }
 
-function getNoteTemplate(indexNote) { // get = kriegen wir // Übergabeparameter (indexNote)
-  return `<p>+ Titel: ${notesTitles[indexNote]} - Notiz: ${notes[indexNote]}
-  <button onclick="noteToArchive(${indexNote})">Archiv</button>
-  <button onclick="noteToTrash(${indexNote})">Papierkorb</button>
-  </p>`;
-}
-
-// Archiv anlegen
+// Bereich: Archiv
 function renderArchiveNotes() {
   let archiveContentRef = document.getElementById("archive_content");
   archiveContentRef.innerHTML = "";
@@ -49,13 +43,7 @@ function renderArchiveNotes() {
   }
 }
 
-function getArchiveNoteTemplate(indexArchiveNote) {
-  return `<p>+ Titel: ${archiveNotesTitles[indexArchiveNote]} - Notiz: ${archiveNotes[indexArchiveNote]}
-  <button onclick="archiveToNotes(${indexArchiveNote})">Notizen</button>
-  <button onclick="archiveToTrash(${indexArchiveNote})">Papierkorb</button></p>`;
-} 
-
-// Papierkorb anlegen
+// Bereich: Papierkorb
 function renderTrashNotes() {
   let trashContentRef = document.getElementById("trash_content");
   trashContentRef.innerHTML = "";
@@ -67,15 +55,6 @@ function renderTrashNotes() {
   ) {
     trashContentRef.innerHTML += getTrashNoteTemplate(indexTrashNote); ////
   }
-}
-
-// Das HTML wird aus der function renderTrashNotes() ausgegliedert
-function getTrashNoteTemplate(indexTrashNote) {
-  return `<p>+ Titel: ${trashNotesTitles[indexTrashNote]} - Notiz: ${trashNotes[indexTrashNote]}
-  <button onclick="trashToNotes(${indexTrashNote})">wiederherstellen</button>
-  <button onclick="trashToArchive(${indexTrashNote})">in das Archiv verschieben</button>
-  <button onclick="deleteNote(${indexTrashNote})">endgültig löschen</button>
-  </p>`;
 }
 
 /////////////////////////// Funktionalitäten: Input-Feld / Buttons ///////////////////////////
@@ -229,21 +208,19 @@ function saveToLocalStorage() {
   );
 }
 
-
 function getFromLocalStorage() {   // Funktion holt gespeicherte Arrays aus dem LocalStorage
   if (JSON.parse(localStorage.getItem("notes")) != null) {
     notes = JSON.parse(localStorage.getItem("notes"));
     notesTitles = JSON.parse(localStorage.getItem("notesTitles"));
   }
 
+  if (JSON.parse(localStorage.getItem("archiveNotes")) != null) {
+    archiveNotes = JSON.parse(localStorage.getItem("archiveNotes"));
+    archiveNotesTitles = JSON.parse(localStorage.getItem("archiveNotesTitles"));
+  }
+
   if (JSON.parse(localStorage.getItem("trashNotes")) != null) {
     trashNotes = JSON.parse(localStorage.getItem("trashNotes"));
     trashNotesTitles = JSON.parse(localStorage.getItem("trashNotesTitles"));
   }
-
-  if (JSON.parse(localStorage.getItem("archiveNotes"))) {
-    archiveNotes = JSON.parse(localStorage.getItem("archiveNotes"));
-    archiveNotesTitles = JSON.parse(localStorage.getItem("archiveNotesTitles"));
-  }
 }
-
